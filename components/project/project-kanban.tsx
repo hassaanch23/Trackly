@@ -2,7 +2,7 @@
 
 import { $Enums, TaskStatus } from "@prisma/client";
 import { Column, ProjectTaskProps } from "@/utils/types";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DragDropContext, Draggable, Droppable, DropResult} from "@hello-pangea/dnd";
 import { cn } from "@/lib/utils";
