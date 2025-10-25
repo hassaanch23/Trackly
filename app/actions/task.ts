@@ -5,6 +5,7 @@ import { userRequired } from "../data/user/is-user-authenticated";
 import { taskFormSchema } from "@/lib/schema";
 import { db } from "@/lib/db";
 import { success } from "zod";
+import { TaskStatus } from "@prisma/client";
 
 export const createNewTask=async(data: TaskFormValues,
     projectId:string,
@@ -60,3 +61,17 @@ export const createNewTask=async(data: TaskFormValues,
     })
     return {success:true};
 };
+
+export const updatedTaskPosition=async(taskId:string, newPosition:number, status:TaskStatus)=>{
+    await userRequired();
+
+    const task=await db.task.update({
+        where:{id:taskId},
+        data:{
+            position:newPosition,
+            status
+        }
+    });
+
+    return task;
+}

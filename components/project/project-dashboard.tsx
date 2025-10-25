@@ -29,7 +29,6 @@ export const ProjectDashboard=({
     totalWorkspaceMembers,
     comments,
 }:ProjectDashboardProps)=>{
-    console.log(tasks);
     return(<>
     <div className="flex flex-col gap-6 px-2 md:px-4 2xl:px-6 py-0">
         <ProjectHeader

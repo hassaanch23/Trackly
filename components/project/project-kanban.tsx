@@ -2,11 +2,14 @@
 
 import { $Enums, TaskStatus } from "@prisma/client";
 import { Column, ProjectTaskProps } from "@/utils/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DragDropContext, Draggable, Droppable, DropResult} from "@hello-pangea/dnd";
 import { cn } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-select";
+import { taskStatusVariant } from "@/utils";
+import { ProjectCard } from "./project-card";
+import { updatedTaskPosition } from "@/app/actions/task";
 
 const COLUMN_TITLES: Record<$Enums.TaskStatus, string> = {
         TODO: "To Do",
@@ -39,7 +42,59 @@ const COLUMN_TITLES: Record<$Enums.TaskStatus, string> = {
             setColumns(initialColumns);
         }, [initialTasks]);
 
-        const onDragEnd = () => {}
+        const onDragEnd  = useCallback(
+            async(result: DropResult) => {
+                const {destination, source} = result;
+
+                if(!destination) return;
+
+                const newColumns = [...columns];
+
+
+                const sourceColumn = newColumns.find(col => col.id === source.droppableId);
+                const destColumn = newColumns.find(col => col.id === destination.droppableId);
+
+                if(!sourceColumn || !destColumn) return;
+
+                const [movedTask] = sourceColumn.tasks.splice(source.index, 1);
+
+                const destinationTasks = destColumn.tasks;
+
+                let newPosition: number;
+
+                if(destinationTasks.length === 0){
+                    newPosition = 1000;
+                } else if(destination.index === 0){
+                    newPosition = destinationTasks[0].position - 1000;
+                } else if (destination.index === destinationTasks.length){
+                    newPosition = destinationTasks[destinationTasks.length -1].position + 1000;
+                } else {
+                    newPosition = (destinationTasks[destination.index -1].position + destinationTasks[destination.index].position) /2;
+                }
+
+                const updatedTask = {
+                    ...movedTask,
+                    position: newPosition,
+                    status: destination.droppableId as TaskStatus,
+                };
+
+                destColumn.tasks.splice(destination.index, 0, updatedTask);
+
+                setColumns(newColumns);
+
+                try{
+                    await updatedTaskPosition(
+                        movedTask.id,
+                        newPosition,
+                        destination.droppableId as TaskStatus
+                    );
+
+                    router.refresh();
+                }catch(error){
+                    console.log(error)
+                }
+            },[columns]
+        )
 
         return <div className="flex gap-4 h-full  md:px-4 overflow-x-auto">
         <DragDropContext onDragEnd={onDragEnd} >
