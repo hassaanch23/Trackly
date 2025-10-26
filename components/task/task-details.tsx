@@ -8,6 +8,7 @@ import { Badge } from "../ui/badge";
 import { format } from "date-fns";
 import { TabsList } from "@radix-ui/react-tabs";
 import Image from "next/image";
+import { EditTaskDialog } from "./edit-task-dialog";
 
 
 interface TaskProps {
@@ -32,10 +33,10 @@ export const TaskDetails = ({task}: TaskProps) => {
                     </div>
                 </div>
                 <div className="w-full md:w-auto flex flex-col justify-end items-end gap-2">
-                    {/* <EditTaskDialog key= {new Date().getTime()} 
+                    <EditTaskDialog key= {new Date().getTime()} 
                     task={task}
                     project={task.project}
-                    /> */}
+                    />
 
                     <div className="flex items-center gap-2">
                         <span className="text-sm text-muted-foreground">Assigned To:</span>
