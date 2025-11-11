@@ -87,11 +87,11 @@ export const TaskDetails = ({task}: TaskProps) => {
                         {task?.attachments?.map((file) => (
                             <div key={file.id} className="relative group cursor-pointer">
                             <Image
-                            src={file.type === "IMAGE" ? file.url : "/pdf.png"}
+                            src={file.type === "PDF" ?  "/pdf.png" : file.url}
                             alt={"attachment"}
                             width={80}
-                            height={80}
-                            className="w-full h-32 object-cover rounded-lg"
+                            height={120}
+                            className="w-full h-48 object-cover rounded-lg"
                             />
 
                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">

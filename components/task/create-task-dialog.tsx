@@ -50,6 +50,9 @@ import {
   SelectValue,
 } from "../ui/select";
 import { TaskPriority } from "@prisma/client";
+import { FileUploadData } from "uploadthing/types";
+import { FileUpload } from "../file-upload";
+
 
 export type TaskFormValues = z.infer<typeof taskFormSchema>;
 
@@ -103,7 +106,10 @@ export const CreateTaskDialog = ({ project }: Props) => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-lg rounded-2xl border-none p-0 overflow-hidden shadow-2xl bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-black">
+      <DialogContent
+  className="sm:max-w-lg rounded-2xl border-none p-0 overflow-hidden shadow-2xl bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-black max-h-[90vh] overflow-y-auto"
+>
+
         <Card className="shadow-none border-none bg-transparent">
           <DialogHeader className="px-6 pt-6 pb-2">
             <DialogTitle className="text-xl font-semibold text-foreground flex justify-center items-center gap-2">
@@ -318,6 +324,26 @@ export const CreateTaskDialog = ({ project }: Props) => {
                             {...field}
                             rows={4}
                             className="resize-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary/60 focus:border-primary/60 bg-muted"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="attachments"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium text-foreground/80">
+                          Attachments
+                        </FormLabel>
+                        <FormControl>
+                          <FileUpload
+                          value={field.value || []}
+                          onChange={field.onChange}
+                          
                           />
                         </FormControl>
                         <FormMessage />

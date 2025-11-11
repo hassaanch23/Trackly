@@ -50,6 +50,18 @@ export const createNewTask=async(data: TaskFormValues,
         },
 
     });
+
+    if (validatedData.attachments && validatedData?.attachments.length> 0)
+    {
+        await db.file.createMany({
+            data:validatedData.attachments.map((file) => ({
+                ...file,
+                taskId:task.id,
+            })),
+
+            
+        });
+    }
     await db.activity.create({
         data:{
             type:"TASK_Created",
