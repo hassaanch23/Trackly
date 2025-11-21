@@ -13,8 +13,6 @@ import { ProfileAvatar } from "./profile-avatar";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
 import { motion } from "framer-motion";
-// import { useContext } from "react";
-// import { SubscriptionContext } from "@/hooks/use-subscription";
 
 interface Props{
     id:string;
@@ -50,8 +48,6 @@ export const Navbar=({id,name,email,image}:Props)=>{
     return( <nav className="w-full flex items-center justify-between p-2 sm:p-4 border-b border-border/40 bg-gradient-to-r from-background via-background to-accent/5">
         {/* Left Section - Branding & Quick Stats */}
         <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-            {/* Logo/Brand */}
-            
 
             {/* Quick Stats Cards */}
             <div className="hidden md:flex items-center gap-3">
