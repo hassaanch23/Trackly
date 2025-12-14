@@ -107,19 +107,6 @@ trackly/
 | Analytics | ❌ | ✅ | ✅ |
 | API Access | ❌ | ✅ | ✅ |
 
-## 🤝 Contributing
-
-Contributions are welcome! Please fork the repository and create a pull request.
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 👥 Group Members
-
-[Add your group members' names and GitHub profiles here]
-
----
 
 <div align="center">
 
